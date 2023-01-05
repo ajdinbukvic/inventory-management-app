@@ -25,7 +25,10 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // ROUTES
+const employeeRoutes = require('./routes/employeeRoutes');
+app.use('/api/employees', employeeRoutes);
 
+// Error handling
 app.all('*', (req, res, next) => {
   next(new CustomError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
