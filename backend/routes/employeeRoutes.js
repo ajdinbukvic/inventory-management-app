@@ -18,17 +18,17 @@ router.post('/create', async (req, res) => {
   try {
     const createdEmp = await Employees.create(employee, { transaction: t });
     const { username, password } = req.body;
-    let hash = await bcrypt.hash(password, 10);
     const resultUser = await Users.create(
       {
         employeeId: createdEmp.id,
         username: username,
-        password: hash,
+        password: password,
       },
       { transaction: t }
     );
     await t.commit();
-    return res.status(201).json(createdEmp);
+    const sve = await Employees.findAll();
+    return res.status(201).json(sve);
   } catch (err) {
     console.log(err);
   }

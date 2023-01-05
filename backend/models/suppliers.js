@@ -1,20 +1,26 @@
 const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
-  const Employees = sequelize.define('Employees', {
-    firstName: {
-      type: DataTypes.STRING(50),
+  const Suppliers = sequelize.define('Suppliers', {
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
-      type: DataTypes.STRING(50),
+    uid: {
+      type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+    },
+    vat: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     phoneNumber: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    address: {
+    contactPerson: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -24,47 +30,43 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       isEmail: true,
     },
-    employmentDate: {
+    startDate: {
       type: DataTypes.DATEONLY,
       set(value) {
         moment.suppressDeprecationWarnings = true;
         this.setDataValue(
-          'employmentDate',
+          'startDate',
           moment(new Date(value)).format('MM-DD-YYYY')
         );
       },
       get() {
-        return moment(this.getDataValue('employmentDate')).format('DD-MM-YYYY');
+        return moment(this.getDataValue('startDate')).format('DD-MM-YYYY');
       },
       allowNull: false,
     },
-    dismissalDate: {
+    endDate: {
       type: DataTypes.DATEONLY,
       set(value) {
         moment.suppressDeprecationWarnings = true;
         this.setDataValue(
-          'dismissalDate',
+          'endDate',
           moment(new Date(value)).format('MM-DD-YYYY')
         );
       },
       get() {
-        if (!this.getDataValue('dismissalDate')) return null;
-        return moment(this.getDataValue('dismissalDate')).format('DD-MM-YYYY');
+        return moment(this.getDataValue('endDate')).format('DD-MM-YYYY');
       },
-      defaultValue: null,
+      allowNull: false,
     },
   });
 
-  Employees.associate = (models) => {
-    Employees.hasOne(models.Users, {
-      foreignKey: 'employeeId',
+  Suppliers.associate = (models) => {
+    Suppliers.hasMany(models.Supplies, {
+      foreignKey: 'supplierId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
-    Employees.addScope('defaultScope', {
-      include: [{ model: models.Users }],
-    });
   };
 
-  return Employees;
+  return Suppliers;
 };
