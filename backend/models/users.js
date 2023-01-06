@@ -4,6 +4,12 @@ module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define(
     'Users',
     {
+      employeeId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       username: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -14,14 +20,20 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           minLengthValidator(value) {
             if (value.length < 8) {
-              throw new Error('Password must be at least 8 character long!');
+              throw new Error('Password must be at least 8 characters long!');
             }
           },
         },
       },
       role: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.ENUM('employee', 'admin'),
         defaultValue: 'employee',
+        validate: {
+          isIn: {
+            args: [['employee', 'admin']],
+            msg: 'Role not supported',
+          },
+        },
       },
     },
     {

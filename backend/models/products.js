@@ -16,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      validate: {
+        checkPositiveValue(value) {
+          if (value < 0) {
+            throw new Error('Price must be positive number!');
+          }
+        },
+      },
     },
   });
 
@@ -24,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'productionProcessId',
     });
   };
+
+  Products.addHook('beforeCreate', async (product) => {
+    const process = product.getProductionProcess();
+  });
 
   return Products;
 };

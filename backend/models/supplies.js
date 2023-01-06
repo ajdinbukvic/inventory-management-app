@@ -7,14 +7,35 @@ module.exports = (sequelize, DataTypes) => {
     quantity: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      validate: {
+        checkPositiveValue(value) {
+          if (value < 0) {
+            throw new Error('Quantity must be positive number!');
+          }
+        },
+      },
     },
     minQuantity: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      validate: {
+        checkPositiveValue(value) {
+          if (value < 0) {
+            throw new Error('Min quantity must be positive number!');
+          }
+        },
+      },
     },
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      validate: {
+        checkPositiveValue(value) {
+          if (value < 0) {
+            throw new Error('Price must be positive number!');
+          }
+        },
+      },
     },
     unitMeasure: {
       type: DataTypes.STRING(20),
@@ -32,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Supplies.belongsToMany(models.ProductionProcess, {
       through: 'ProductionProcessItem',
-      foreignKey: 'productionProcessId',
+      foreignKey: 'supplyId',
     });
   };
 
