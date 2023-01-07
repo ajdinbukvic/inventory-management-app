@@ -1,11 +1,24 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 
 const CustomError = require('./utils/customError');
 const globalErrorHandler = require('./controllers/errorController');
 
+const employeeRouter = require('./routes/employeeRoutes');
+const userRouter = require('./routes/userRoutes');
+const productRouter = require('./routes/productRoutes');
+const productionProcessRouter = require('./routes/productionProcessRoutes');
+const supplyRouter = require('./routes/supplyRoutes');
+const supplierRouter = require('./routes/supplierRoutes');
+
 const app = express();
+
+// CORS
+app.enable('trust proxy');
+app.use(cors());
+app.options('*', cors());
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
@@ -25,8 +38,12 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // ROUTES
-const employeeRoutes = require('./routes/employeeRoutes');
-app.use('/api/employees', employeeRoutes);
+app.use('/api/employees', employeeRouter);
+app.use('/api/users', userRouter);
+app.use('/api/products', productRouter);
+app.use('/api/productionprocess', productionProcessRouter);
+app.use('/api/supplies', supplyRouter);
+app.use('/api/suppliers', supplierRouter);
 
 // Error handling
 app.all('*', (req, res, next) => {
