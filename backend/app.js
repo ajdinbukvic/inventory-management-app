@@ -6,6 +6,7 @@ const cors = require('cors');
 const CustomError = require('./utils/customError');
 const globalErrorHandler = require('./controllers/errorController');
 
+const authRouter = require('./routes/authRoutes');
 const employeeRouter = require('./routes/employeeRoutes');
 const userRouter = require('./routes/userRoutes');
 const productRouter = require('./routes/productRoutes');
@@ -38,6 +39,7 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // ROUTES
+app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);

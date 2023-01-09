@@ -48,6 +48,10 @@ exports.login = asyncCatch(async (req, res, next) => {
     return next(new CustomError('Incorrect username or password', 401));
   }
 
+  if (user.dismissalDate != null) {
+    return next(new CustomError('You cannot use application anymore', 401));
+  }
+
   createSendToken(user, 200, res);
 });
 
@@ -111,7 +115,7 @@ exports.restrictTo = (...roles) => {
   };
 };
 
-exports.updatePassword = asyncCatch(async (req, res, next) => {
+exports.changePassword = asyncCatch(async (req, res, next) => {
   const user = await Users.findByPk(req.user.employeeId, {
     include: ['password'],
   });

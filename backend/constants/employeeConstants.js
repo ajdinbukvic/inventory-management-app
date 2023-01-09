@@ -1,0 +1,18 @@
+const EMPLOYEE_FIRTSTNAME_REQUIRED = 'Firstname is required!';
+const EMPLOYEE_LASTNAME_REQUIRED = 'Lastname is required!';
+const EMPLOYEE_PHONE_NUMBER_REQUIRED = 'Phone number is required!';
+const EMPLOYEE_ADDRESS_REQUIRED = 'Address is required!';
+const EMPLOYEE_EMPLOYMENT_DATE_REQUIRED = 'Employment date is required!';
+const EMPLOYEE_EMAIL_REQUIRED = 'Email is required!';
+EMPLOYEE_EMAIL_ALREADY_EXISTS = (email) =>
+  `Employee with email ${email} already exists.`;
+
+module.exports = {
+  EMPLOYEE_FIRTSTNAME_REQUIRED,
+  EMPLOYEE_LASTNAME_REQUIRED,
+  EMPLOYEE_PHONE_NUMBER_REQUIRED,
+  EMPLOYEE_ADDRESS_REQUIRED,
+  EMPLOYEE_EMPLOYMENT_DATE_REQUIRED,
+  EMPLOYEE_EMAIL_REQUIRED,
+  EMPLOYEE_EMAIL_ALREADY_EXISTS,
+};

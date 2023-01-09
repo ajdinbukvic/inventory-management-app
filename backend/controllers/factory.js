@@ -1,5 +1,6 @@
 const asyncCatch = require('./../utils/asyncCatch');
 const CustomError = require('./../utils/customError');
+const { validationResult } = require('express-validator');
 
 exports.deleteOne = (Model) =>
   asyncCatch(async (req, res, next) => {
@@ -9,7 +10,7 @@ exports.deleteOne = (Model) =>
       },
     });
     if (!obj) {
-      return next(new CustomError('No row found with that ID', 404));
+      return next(new CustomError('No data found with that ID', 404));
     }
 
     res.status(204).json({
@@ -27,7 +28,7 @@ exports.updateOne = (Model) =>
     });
 
     if (!obj) {
-      return next(new CustomError('No row found with that ID', 404));
+      return next(new CustomError('No data found with that ID', 404));
     }
 
     res.status(200).json({
@@ -40,6 +41,12 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   asyncCatch(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
+    }
+
     const obj = await Model.create(req.body);
 
     res.status(201).json({
@@ -55,7 +62,7 @@ exports.getOne = (Model) =>
     const obj = await Model.findByPk(req.params.id);
 
     if (!obj) {
-      return next(new CustomError('No row found with that ID', 404));
+      return next(new CustomError('No data found with that ID', 404));
     }
 
     res.status(200).json({

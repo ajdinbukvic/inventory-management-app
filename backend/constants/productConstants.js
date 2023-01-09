@@ -1,0 +1,11 @@
+const PRODUCT_NAME_REQUIRED = 'Name is required!';
+const PRODUCT_IMAGE_URL_REQUIRED = 'Image URL is required!';
+const PRODUCT_MARGIN_REQUIRED = 'Margin is required!';
+const PRODUCT_PRODUCTION_PROCESS_REQUIRED = 'Production process is requeired!';
+
+module.exports = {
+  PRODUCT_NAME_REQUIRED,
+  PRODUCT_IMAGE_URL_REQUIRED,
+  PRODUCT_MARGIN_REQUIRED,
+  PRODUCT_PRODUCTION_PROCESS_REQUIRED,
+};

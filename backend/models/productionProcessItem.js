@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           checkPositiveValue(value) {
-            if (value < 0) {
-              throw new Error('Quantity must be positive number or zero!');
+            if (value <= 0) {
+              throw new Error('Quantity must be positive number!');
             }
           },
         },
