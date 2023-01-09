@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           checkPositiveValue(value) {
             if (value < 0) {
-              throw new Error('Quantity must be positive number!');
+              throw new Error('Quantity must be positive number or zero!');
             }
           },
         },
@@ -34,27 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'production_process_item',
     }
   );
-
-  ProductionProcessItem.sumSupplyPriceAndQuantity = () => {
-    ProductionProcessItem.findAll({
-      attributes: ['productionProcessId'],
-      include: [
-        {
-          model: Supplies,
-          attributes: [[sequelize.fn('SUM', sequelize.col('price')), 'total']],
-          include: [
-            {
-              model: ProductionProcess,
-              attributes: [],
-            },
-          ],
-        },
-      ],
-      raw: true,
-      group: ['productionProcessId'],
-      nest: true,
-    });
-  };
 
   return ProductionProcessItem;
 };

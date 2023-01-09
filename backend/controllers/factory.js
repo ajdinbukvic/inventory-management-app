@@ -3,10 +3,13 @@ const CustomError = require('./../utils/customError');
 
 exports.deleteOne = (Model) =>
   asyncCatch(async (req, res, next) => {
-    const doc = await Model.findByIdAndDelete(req.params.id);
-
-    if (!doc) {
-      return next(new CustomError('No document found with that ID', 404));
+    const obj = await Model.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!obj) {
+      return next(new CustomError('No row found with that ID', 404));
     }
 
     res.status(204).json({
@@ -17,63 +20,61 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   asyncCatch(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
+    const obj = await Model.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
     });
 
-    if (!doc) {
-      return next(new CustomError('No document found with that ID', 404));
+    if (!obj) {
+      return next(new CustomError('No row found with that ID', 404));
     }
 
     res.status(200).json({
       status: 'success',
       data: {
-        data: doc,
+        data: obj,
       },
     });
   });
 
 exports.createOne = (Model) =>
   asyncCatch(async (req, res, next) => {
-    const doc = await Model.create(req.body);
+    const obj = await Model.create(req.body);
 
     res.status(201).json({
       status: 'success',
       data: {
-        data: doc,
+        data: obj,
       },
     });
   });
 
-exports.getOne = (Model, popOptions) =>
+exports.getOne = (Model) =>
   asyncCatch(async (req, res, next) => {
-    let query = Model.findById(req.params.id);
-    if (popOptions) query = query.populate(popOptions);
-    const doc = await query;
+    const obj = await Model.findByPk(req.params.id);
 
-    if (!doc) {
-      return next(new CustomError('No document found with that ID', 404));
+    if (!obj) {
+      return next(new CustomError('No row found with that ID', 404));
     }
 
     res.status(200).json({
       status: 'success',
       data: {
-        data: doc,
+        data: obj,
       },
     });
   });
 
 exports.getAll = (Model) =>
   asyncCatch(async (req, res, next) => {
-    const doc = await Model.findAll();
+    const obj = await Model.findAll();
 
-    // SEND RESPONSE
     res.status(200).json({
       status: 'success',
-      results: doc.length,
+      results: obj.length,
       data: {
-        data: doc,
+        data: obj,
       },
     });
   });

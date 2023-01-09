@@ -4,9 +4,10 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-// Protect all routes after this middleware
+// Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
 router.use(authController.protect);
 
+// Zastita svih ruta ispod ovog middleware-a (samo logovani ADMIN)
 router.use(authController.restrictTo('admin'));
 
 router
@@ -17,7 +18,8 @@ router
 router
   .route('/:id')
   .get(userController.getEmployee)
-  .patch(userController.updateEmployee)
-  .delete(userController.deleteEmployee);
+  .patch(userController.updateEmployee);
+//.delete(userController.deleteEmployee);
+//prema postavci zaposlenici se ne brisu vec se update-a "dismissalDate" na neki datum
 
 module.exports = router;

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkPositiveValue(value) {
           if (value < 0) {
-            throw new Error('Quantity must be positive number!');
+            throw new Error('Quantity must be positive number or zero!');
           }
         },
       },
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkPositiveValue(value) {
           if (value < 0) {
-            throw new Error('Min quantity must be positive number!');
+            throw new Error('Min quantity must be positive number or zero!');
           }
         },
       },
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         checkPositiveValue(value) {
-          if (value < 0) {
+          if (value <= 0) {
             throw new Error('Price must be positive number!');
           }
         },
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isUsed: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      defaultValue: true,
     },
   });
 

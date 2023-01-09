@@ -61,6 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
+    //prilikom GET zaposlenika, prikazuju se i podaci iz tabele "Users"
     Employees.addScope('defaultScope', {
       include: [{ model: models.Users }],
     });

@@ -4,7 +4,7 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-// Protect all routes after this middleware
+// Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
 router.use(authController.protect);
 
 router

@@ -4,7 +4,7 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-// Protect all routes after this middleware
+// Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
 router.use(authController.protect);
 
 router
@@ -15,7 +15,8 @@ router
 router
   .route('/:id')
   .get(supplierController.getSupplier)
-  .patch(supplierController.updateSupplier)
-  .delete(supplierController.deleteSupplier);
+  .patch(supplierController.updateSupplier);
+//.delete(supplierController.deleteSupplier);
+//prema postavci dobavljaci se ne brisu vec se update-a "endDate" na neki datum
 
 module.exports = router;
