@@ -1,8 +1,8 @@
 const express = require('express');
-const employeeController = require('./../controllers/employeeController');
-const authController = require('./../controllers/authController');
-const { createEmployeeValidator } = require('../validators/employeeValidators');
-const { createUserValidator } = require('../validators/userValidators');
+const employeeController = require('../controllers/employeeController');
+const authController = require('../controllers/authController');
+const employeeValidator = require('../validators/employeeValidators');
+const userValidator = require('../validators/userValidators');
 const router = express.Router();
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
@@ -15,14 +15,15 @@ router
   .route('/')
   .get(employeeController.getAllEmployees)
   .post(
-    createEmployeeValidator,
-    createUserValidator,
+    employeeValidator.createEmployeeValidator,
+    userValidator.createUserValidator,
     employeeController.createEmployee
   );
+//prilikom kreiranja zaposlenika, istovremeno se kreira i korisnik (TRANSAKCIJA)
 
 router
   .route('/:id')
-  .get(userContemployeeControllerroller.getEmployee)
+  .get(employeeController.getEmployee)
   .patch(employeeController.updateEmployee);
 //.delete(userController.deleteEmployee);
 //prema postavci zaposlenici se ne brisu vec se update-a "dismissalDate" na neki datum

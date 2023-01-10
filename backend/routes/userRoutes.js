@@ -1,14 +1,14 @@
-const express = require('express');
-const userController = require('../controllers/userController');
-const authController = require('../controllers/authController');
+// const express = require('express');
+// const userController = require('../controllers/userController');
+// const authController = require('../controllers/authController');
 
-const router = express.Router();
+// const router = express.Router();
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
-router.use(authController.protect);
+// router.use(authController.protect);
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani ADMIN)
-router.use(authController.restrictTo('admin'));
+// router.use(authController.restrictTo('admin'));
 
 // router
 //   .route('/')
@@ -21,4 +21,4 @@ router.use(authController.restrictTo('admin'));
 //   .patch(userController.updateUser); //kod korisnika se nema sta update-ovati (osim lozinke u authControlleru)
 //.delete(userController.deleteUser); //prema postavci nema brisanja korisnika
 
-module.exports = router;
+// module.exports = router;

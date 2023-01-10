@@ -1,6 +1,8 @@
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const { Users } = require('../models');
+const bcrypt = require('bcrypt');
+const { Users, Employees } = require('../models');
+const { validationResult } = require('express-validator');
 const asyncCatch = require('./../utils/asyncCatch');
 const CustomError = require('./../utils/customError');
 const {
@@ -39,18 +41,28 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.login = asyncCatch(async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors);
+  }
+
   const { username, password } = req.body;
 
   const user = await Users.findOne({
     where: { username: username },
-    include: ['password'],
+    attributes: {
+      include: ['password'],
+    },
   });
 
   if (!user || !(await user.comparePassword(password, user.password))) {
     return next(new CustomError(USER_INCORRECT_USERNAME_PASSWORD, 401));
   }
 
-  if (user.dismissalDate != null) {
+  const employee = await Employees.findByPk(user.employeeId);
+
+  if (employee.dismissalDate != null) {
     return next(new CustomError(USER_IS_FIRED, 401));
   }
 
@@ -118,8 +130,16 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.changePassword = asyncCatch(async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors);
+  }
+
   const user = await Users.findByPk(req.user.employeeId, {
-    include: ['password'],
+    attributes: {
+      include: ['password'],
+    },
   });
 
   if (!(await user.comparePassword(req.body.currentPassword, user.password))) {
@@ -130,7 +150,7 @@ exports.changePassword = asyncCatch(async (req, res, next) => {
     return next(new CustomError(USER_PASSWORDS_NOT_MATCHING, 401));
   }
 
-  user.password = req.body.password;
+  user.password = await bcrypt.hash(req.body.password, 12);
   await user.save({ fields: ['password'] });
 
   createSendToken(user, 200, res);

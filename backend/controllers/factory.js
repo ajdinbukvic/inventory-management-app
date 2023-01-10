@@ -21,24 +21,21 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   asyncCatch(async (req, res, next) => {
-    const obj = await Model.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+    const obj = await Model.findByPk(req.params.id);
 
     if (!obj) {
       return next(new CustomError('No data found with that ID', 404));
     }
 
+    const updatedObj = await obj.update(req.body);
+
     res.status(200).json({
       status: 'success',
       data: {
-        data: obj,
+        data: updatedObj,
       },
     });
   });
-
 exports.createOne = (Model) =>
   asyncCatch(async (req, res, next) => {
     const errors = validationResult(req);

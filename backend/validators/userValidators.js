@@ -24,11 +24,8 @@ exports.createUserValidator = [
   check('password')
     .notEmpty()
     .withMessage(USER_PASSWORD_REQUIRED)
-    .custom((value) => {
-      if (value.length < 8) {
-        return Promise.reject(USER_PASSWORD_MIN_LENGTH);
-      }
-    })
+    .isLength({ min: 8 })
+    .withMessage(USER_PASSWORD_MIN_LENGTH)
     .bail(),
 
   (req, res, next) => {

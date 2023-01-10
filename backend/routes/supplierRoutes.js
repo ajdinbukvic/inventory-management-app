@@ -1,7 +1,7 @@
 const express = require('express');
-const supplierController = require('./../controllers/supplierController');
-const authController = require('./../controllers/authController');
-const { createSupplierValidator } = require('../validators/supplierValidators');
+const supplierController = require('../controllers/supplierController');
+const authController = require('../controllers/authController');
+const supplierValidator = require('../validators/supplierValidators');
 const router = express.Router();
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
@@ -10,7 +10,10 @@ router.use(authController.protect);
 router
   .route('/')
   .get(supplierController.getAllSuppliers)
-  .post(createSupplierValidator, supplierController.createSupplier);
+  .post(
+    supplierValidator.createSupplierValidator,
+    supplierController.createSupplier
+  );
 
 router
   .route('/:id')
