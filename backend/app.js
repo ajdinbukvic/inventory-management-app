@@ -8,7 +8,7 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const authRouter = require('./routes/authRoutes');
 const employeeRouter = require('./routes/employeeRoutes');
-const userRouter = require('./routes/userRoutes');
+//const userRouter = require('./routes/userRoutes'); //nisu potrebne user rute
 const productRouter = require('./routes/productRoutes');
 const productionProcessRouter = require('./routes/productionProcessRoutes');
 const supplyRouter = require('./routes/supplyRoutes');
@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // ROUTES
 app.use('/api/auth', authRouter);
 app.use('/api/employees', employeeRouter);
-app.use('/api/users', userRouter);
+//app.use('/api/users', userRouter); //nisu potrebne user rute
 app.use('/api/products', productRouter);
 app.use('/api/productionprocess', productionProcessRouter);
 app.use('/api/supplies', supplyRouter);

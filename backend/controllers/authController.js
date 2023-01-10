@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const { Users } = require('../models');
 const asyncCatch = require('./../utils/asyncCatch');
 const CustomError = require('./../utils/customError');
+const {
+  USER_INCORRECT_USERNAME_PASSWORD,
+  USER_IS_FIRED,
+  USER_CURRENT_PASSWORD_WRONG,
+  USER_PASSWORDS_NOT_MATCHING,
+} = require('../constants/userConstants');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -35,21 +41,17 @@ const createSendToken = (user, statusCode, res) => {
 exports.login = asyncCatch(async (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return next(new CustomError('Please provide username and password!', 400));
-  }
-
   const user = await Users.findOne({
     where: { username: username },
     include: ['password'],
   });
 
   if (!user || !(await user.comparePassword(password, user.password))) {
-    return next(new CustomError('Incorrect username or password', 401));
+    return next(new CustomError(USER_INCORRECT_USERNAME_PASSWORD, 401));
   }
 
   if (user.dismissalDate != null) {
-    return next(new CustomError('You cannot use application anymore', 401));
+    return next(new CustomError(USER_IS_FIRED, 401));
   }
 
   createSendToken(user, 200, res);
@@ -121,13 +123,11 @@ exports.changePassword = asyncCatch(async (req, res, next) => {
   });
 
   if (!(await user.comparePassword(req.body.currentPassword, user.password))) {
-    return next(new CustomError('Your current password is wrong.', 401));
+    return next(new CustomError(USER_CURRENT_PASSWORD_WRONG, 401));
   }
 
   if (req.body.password !== req.body.passwordConfirm) {
-    return next(
-      new CustomError('Password and password confirm must be same.', 401)
-    );
+    return next(new CustomError(USER_PASSWORDS_NOT_MATCHING, 401));
   }
 
   user.password = req.body.password;

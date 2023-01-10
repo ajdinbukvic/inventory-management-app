@@ -5,6 +5,8 @@ const SUPPLIER_PHONE_NUMBER_REQUIRED = 'Phone number is required!';
 const SUPPLIER_CONTACT_PERSON_REQUIRED = 'Contact person is required!';
 const SUPPLIER_START_DATE_REQUIRED = 'Start date is required!';
 const SUPPLIER_EMAIL_REQUIRED = 'Email is required!';
+const SUPPLIER_START_DATE_VALID = 'Start date must be valid';
+const SUPPLIER_EMAIL_VALID = 'Email must be valid!';
 SUPPLIER_EMAIL_ALREADY_EXISTS = (email) =>
   `Supplier with email ${email} already exists.`;
 SUPPLIER_UID_ALREADY_EXISTS = (uid) =>
@@ -23,4 +25,6 @@ module.exports = {
   SUPPLIER_EMAIL_ALREADY_EXISTS,
   SUPPLIER_UID_ALREADY_EXISTS,
   SUPPLIER_VAT_ALREADY_EXISTS,
+  SUPPLIER_START_DATE_VALID,
+  SUPPLIER_EMAIL_VALID,
 };

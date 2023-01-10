@@ -1,7 +1,8 @@
 const express = require('express');
 const employeeController = require('./../controllers/employeeController');
 const authController = require('./../controllers/authController');
-
+const { createEmployeeValidator } = require('../validators/employeeValidators');
+const { createUserValidator } = require('../validators/userValidators');
 const router = express.Router();
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
@@ -12,13 +13,17 @@ router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
-  .get(userController.getAllEmployees)
-  .post(userController.createEmployee);
+  .get(employeeController.getAllEmployees)
+  .post(
+    createEmployeeValidator,
+    createUserValidator,
+    employeeController.createEmployee
+  );
 
 router
   .route('/:id')
-  .get(userController.getEmployee)
-  .patch(userController.updateEmployee);
+  .get(userContemployeeControllerroller.getEmployee)
+  .patch(employeeController.updateEmployee);
 //.delete(userController.deleteEmployee);
 //prema postavci zaposlenici se ne brisu vec se update-a "dismissalDate" na neki datum
 

@@ -1,7 +1,9 @@
 const express = require('express');
 const productionProcessController = require('./../controllers/productionProcessController');
 const authController = require('./../controllers/authController');
-
+const {
+  createProductionProcessValidator,
+} = require('../validators/productionProcessValidators');
 const router = express.Router();
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
@@ -10,7 +12,10 @@ router.use(authController.protect);
 router
   .route('/')
   .get(productionProcessController.getAllProductionProcesses)
-  .post(productionProcessController.createProductionProcess);
+  .post(
+    createProductionProcessValidator,
+    productionProcessController.createProductionProcess
+  );
 
 router
   .route('/:id')
