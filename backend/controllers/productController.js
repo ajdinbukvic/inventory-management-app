@@ -27,7 +27,9 @@ exports.createProduct = asyncCatch(async (req, res, next) => {
   const productionProcess = await ProductionProcess.findByPk(
     req.body.productionProcessId
   );
-  newProduct.price = Number.parseFloat(margin * productionProcess.price);
+  newProduct.price = Number.parseFloat(
+    (req.body.margin / 100.0) * productionProcess.price
+  );
 
   const createdProduct = await Products.create(newProduct);
 

@@ -31,10 +31,10 @@ exports.createProductionProcess = asyncCatch(async (req, res, next) => {
 
   const items = req.body.items;
 
-  items.forEach(async (item) => {
+  for (const item of items) {
     const supply = await Supplies.findByPk(item.supplyId);
     productionProcessPrice += Number.parseFloat(supply.price * item.quantity);
-  });
+  }
 
   newProductionProcess.price = productionProcessPrice;
 
@@ -45,7 +45,7 @@ exports.createProductionProcess = asyncCatch(async (req, res, next) => {
       newProductionProcess,
       { transaction: t }
     );
-    items.forEach(async (item) => {
+    for (const item of items) {
       await ProductionProcessItem.create(
         {
           productionProcessId: createdProductionProcess.id,
@@ -54,7 +54,7 @@ exports.createProductionProcess = asyncCatch(async (req, res, next) => {
         },
         { transaction: t }
       );
-    });
+    }
     await t.commit();
     res.status(201).json({
       status: 'success',

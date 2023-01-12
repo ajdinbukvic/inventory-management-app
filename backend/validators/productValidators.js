@@ -5,7 +5,7 @@ const {
   PRODUCT_MARGIN_REQUIRED,
   PRODUCT_PRODUCTION_PROCESS_REQUIRED,
   PRODUCT_MARGIN_VALID,
-  PRODUCT_MARGIN_POSITIVE,
+  PRODUCT_MARGIN_POSITIVE_BETWEEN,
   PRODUCT_IMAGE_URL_VALID,
   PRODUCT_PRODUCTION_PROCESS_NOT_EXISTS,
   PRODUCT_PRODUCTION_PROCESS_VALID,
@@ -25,13 +25,11 @@ exports.createProductValidator = [
   check('margin')
     .notEmpty()
     .withMessage(PRODUCT_MARGIN_REQUIRED)
+    .toFloat()
     .isFloat()
     .withMessage(PRODUCT_MARGIN_VALID)
-    .custom((value) => {
-      if (Number.parseFloat(value) <= 0) {
-        return Promise.reject(PRODUCT_MARGIN_POSITIVE);
-      }
-    })
+    .isFloat({ gt: 0.0, lt: 100 })
+    .withMessage(PRODUCT_MARGIN_POSITIVE_BETWEEN)
     .bail(),
 
   check('productionProcessId')

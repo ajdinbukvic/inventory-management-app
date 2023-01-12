@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         );
       },
       get() {
+        if (!this.getDataValue('endDate')) return null;
         return moment(this.getDataValue('endDate')).format('DD-MM-YYYY');
       },
       defaultValue: null,

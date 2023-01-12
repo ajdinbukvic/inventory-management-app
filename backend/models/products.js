@@ -12,6 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     margin: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      validate: {
+        checkPositiveValueBetween(value) {
+          if (value <= 0 || value > 99) {
+            throw new Error('Margin must be positive number between 1-100!');
+          }
+        },
+      },
     },
     price: {
       type: DataTypes.FLOAT,

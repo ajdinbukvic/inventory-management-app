@@ -23,37 +23,31 @@ exports.createSupplyValidator = [
   check('quantity')
     .notEmpty()
     .withMessage(SUPPLY_QUANTITY_REQUIRED)
+    .toFloat()
     .isFloat()
     .withMessage(SUPPLY_QUANTITY_VALID)
-    .custom((value) => {
-      if (Number.parseFloat(value) <= 0) {
-        return Promise.reject(SUPPLY_QUANTITY_POSITIVE);
-      }
-    })
+    .isFloat({ gt: 0.0 })
+    .withMessage(SUPPLY_QUANTITY_POSITIVE)
     .bail(),
 
   check('minQuantity')
     .notEmpty()
     .withMessage(SUPPLY_MIN_QUANTITY_REQUIRED)
+    .toFloat()
     .isFloat()
     .withMessage(SUPPLY_MIN_QUANTITY_VALID)
-    .custom((value) => {
-      if (Number.parseFloat(value) <= 0) {
-        return Promise.reject(SUPPLY_MIN_QUANTITY_POSITIVE);
-      }
-    })
+    .isFloat({ gt: 0.0 })
+    .withMessage(SUPPLY_MIN_QUANTITY_POSITIVE)
     .bail(),
 
   check('price')
     .notEmpty()
     .withMessage(SUPPLY_PRICE_REQUIRED)
+    .toFloat()
     .isFloat()
     .withMessage(SUPPLY_PRICE_VALID)
-    .custom((value) => {
-      if (Number.parseFloat(value) <= 0) {
-        return Promise.reject(SUPPLY_PRICE_POSITIVE);
-      }
-    })
+    .isFloat({ gt: 0.0 })
+    .withMessage(SUPPLY_PRICE_POSITIVE)
     .bail(),
 
   check('unitMeasure')

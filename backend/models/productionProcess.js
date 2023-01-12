@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
           );
         },
         get() {
+          if (!this.getDataValue('endDate')) return null;
           return moment(this.getDataValue('endDate')).format('DD-MM-YYYY');
         },
         defaultValue: null,
@@ -62,6 +63,13 @@ module.exports = (sequelize, DataTypes) => {
     ProductionProcess.belongsToMany(models.Supplies, {
       through: 'ProductionProcessItem',
       foreignKey: 'productionProcessId',
+    });
+    ProductionProcess.hasMany(models.ProductionProcessItem, {
+      foreignKey: 'productionProcessId',
+    });
+    //prilikom GET proizvodnih procesa, prikazuju se i podaci iz tabele "ProductionProcessItem"
+    ProductionProcess.addScope('defaultScope', {
+      include: [{ model: models.ProductionProcessItem }],
     });
   };
 
