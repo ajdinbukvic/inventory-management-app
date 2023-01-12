@@ -1,4 +1,4 @@
-const { Products } = require('../models');
+const { Products, ProductionProcess } = require('../models');
 const asyncCatch = require('./../utils/asyncCatch');
 const { validationResult } = require('express-validator');
 const factory = require('./factory');
@@ -16,11 +16,25 @@ exports.createProduct = asyncCatch(async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json(errors);
   }
-  await t.commit();
+
+  const newProduct = {
+    name: req.body.name,
+    imageUrl: req.body.imageUrl,
+    margin: req.body.margin,
+    productionProcessId: req.body.productionProcessId,
+  };
+
+  const productionProcess = await ProductionProcess.findByPk(
+    req.body.productionProcessId
+  );
+  newProduct.price = Number.parseFloat(margin * productionProcess.price);
+
+  const createdProduct = await Products.create(newProduct);
+
   res.status(201).json({
     status: 'success',
     data: {
-      data: null,
+      data: createdProduct,
     },
   });
 });

@@ -1,4 +1,9 @@
-const { ProductionProcess } = require('../models');
+const {
+  ProductionProcess,
+  ProductionProcessItem,
+  Supplies,
+  sequelize,
+} = require('../models');
 const asyncCatch = require('./../utils/asyncCatch');
 const { validationResult } = require('express-validator');
 const factory = require('./factory');
@@ -16,10 +21,48 @@ exports.createProductionProcess = asyncCatch(async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json(errors);
   }
-  res.status(201).json({
-    status: 'success',
-    data: {
-      data: null,
-    },
+
+  const newProductionProcess = {
+    name: req.body.name,
+    startDate: req.body.startDate,
+  };
+
+  let productionProcessPrice = 0;
+
+  const items = req.body.items;
+
+  items.forEach(async (item) => {
+    const supply = await Supplies.findByPk(item.supplyId);
+    productionProcessPrice += Number.parseFloat(supply.price * item.quantity);
   });
+
+  newProductionProcess.price = productionProcessPrice;
+
+  const t = await sequelize.transaction();
+
+  try {
+    const createdProductionProcess = await ProductionProcess.create(
+      newProductionProcess,
+      { transaction: t }
+    );
+    items.forEach(async (item) => {
+      await ProductionProcessItem.create(
+        {
+          productionProcessId: createdProductionProcess.id,
+          supplyId: item.supplyId,
+          quantity: item.quantity,
+        },
+        { transaction: t }
+      );
+    });
+    await t.commit();
+    res.status(201).json({
+      status: 'success',
+      data: {
+        data: createdProductionProcess,
+      },
+    });
+  } catch (err) {
+    await t.rollback();
+  }
 });
