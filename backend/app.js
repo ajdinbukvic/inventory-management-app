@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const CustomError = require('./utils/customError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -18,7 +19,13 @@ const app = express();
 
 // CORS
 app.enable('trust proxy');
-app.use(cors());
+//app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  })
+);
 app.options('*', cors());
 
 // Development logging
@@ -37,6 +44,7 @@ app.use('/api', limiter);
 // Body parser
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
 
 // ROUTES
 app.use('/api/auth', authRouter);

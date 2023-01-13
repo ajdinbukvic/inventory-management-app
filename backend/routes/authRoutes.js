@@ -8,6 +8,7 @@ const router = express.Router();
 // Prema postavci nema rute za "Registraciju" (samo ADMIN dodaje zaposlenike)
 router.post('/login', userValidator.loginUserValidator, authController.login);
 router.get('/logout', authController.logout);
+router.get('/isLoggedIn', authController.isLoggedIn);
 
 // Zastita svih ruta ispod ovog middleware-a (samo logovani korisnici)
 router.use(authController.protect);

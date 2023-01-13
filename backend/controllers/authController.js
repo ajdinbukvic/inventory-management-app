@@ -77,6 +77,18 @@ exports.logout = (req, res) => {
   res.status(200).json({ status: 'success' });
 };
 
+exports.isLoggedIn = async (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.json(false);
+  }
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  if (verified) {
+    return res.json(true);
+  }
+  return res.json(false);
+};
+
 exports.protect = asyncCatch(async (req, res, next) => {
   let token;
   if (
