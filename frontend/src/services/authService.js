@@ -8,7 +8,7 @@ export const loginUser = async (formData) => {
   try {
     const response = await axios.post(`${BASE_URL}auth/login`, formData);
     if (response.statusText === "OK") {
-      toast.success("Login Successful...", {
+      toast.success("Uspješno ste se prijavili!", {
         position: toast.POSITION.TOP_CENTER,
       });
     }
@@ -33,7 +33,9 @@ export const logoutUser = async () => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    toast.error(message);
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
   }
 };
 
@@ -47,7 +49,9 @@ export const getLoginStatus = async () => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    toast.error(message);
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
   }
 };
 
@@ -64,6 +68,8 @@ export const changePassword = async (formData) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    toast.error(message);
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
   }
 };

@@ -49,11 +49,18 @@ exports.changePasswordUserValidator = [
     .withMessage(USER_CURRENT_PASSWORD_REQUIRED)
     .bail(),
 
-  check('password').notEmpty().withMessage(USER_PASSWORD_REQUIRED).bail(),
+  check('password')
+    .notEmpty()
+    .withMessage(USER_PASSWORD_REQUIRED)
+    .isLength({ min: 8 })
+    .withMessage(USER_PASSWORD_MIN_LENGTH)
+    .bail(),
 
   check('passwordConfirm')
     .notEmpty()
     .withMessage(USER_PASSWORD_CONFIRM_REQUIRED)
+    .isLength({ min: 8 })
+    .withMessage(USER_PASSWORD_MIN_LENGTH)
     .bail(),
 
   (req, res, next) => {

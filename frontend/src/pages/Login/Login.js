@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { BiLogIn } from "react-icons/bi";
-import Card from "../components/card/Card";
+import Card from "../../components/card/Card";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { loginUser } from "../services/authService";
-import { selectIsLoggedIn, SET_LOGIN, SET_USER } from "../helpers/auth";
+import { loginUser } from "../../services/authService";
+import { selectIsLoggedIn, SET_LOGIN, SET_USER } from "../../helpers/auth";
 
 const initialState = {
   username: "",
@@ -34,7 +34,7 @@ const Login = () => {
     e.preventDefault();
 
     if (!username || !password) {
-      return toast.error("All fields are required");
+      return toast.error("Morate popuniti sva polja!");
     }
 
     const userData = {
@@ -67,7 +67,7 @@ const Login = () => {
             <form onSubmit={login}>
               <input
                 type="text"
-                placeholder="Username"
+                placeholder="Korisničko ime"
                 required
                 name="username"
                 value={username}
@@ -75,7 +75,7 @@ const Login = () => {
               />
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Lozinka"
                 required
                 name="password"
                 value={password}

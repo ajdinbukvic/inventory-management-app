@@ -8,10 +8,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  console.log(user);
   const logout = async () => {
     await logoutUser();
     await dispatch(SET_LOGIN(false));
+    localStorage.removeItem("user");
     navigate("/login");
   };
 

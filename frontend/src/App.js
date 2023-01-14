@@ -1,8 +1,8 @@
 //import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import Home from "./pages/Home";
-import ChangePassword from "./pages/ChangePassword";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import Employees from "./pages/Employees";
 import ManageEmployee from "./pages/ManageEmployee";
 import Supplies from "./pages/Supplies";
@@ -51,9 +51,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Sidebar>
-                <Layout>
-                  <ChangePassword />
-                </Layout>
+                <ChangePassword />
               </Sidebar>
             </ProtectedRoute>
           }
