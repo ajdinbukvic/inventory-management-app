@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
       through: 'ProductionProcessItem',
       foreignKey: 'supplyId',
     });
+    //prilikom GET sirovina, prikazuju se i podaci iz tabele "Dobavljaci"
+    Supplies.addScope('defaultScope', {
+      include: [{ model: models.Suppliers }],
+    });
   };
 
   return Supplies;

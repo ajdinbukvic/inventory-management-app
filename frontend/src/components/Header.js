@@ -21,6 +21,8 @@ const Header = () => {
         <h3>
           <span className="--fw-thin">Dobro došao, </span>
           <span className="--color-primary">{user.username}</span>
+          &nbsp;
+          <span className="--color-danger">[ {user.role} ]</span>
         </h3>
         <button onClick={logout} className="--btn --btn-danger">
           Odjava

@@ -44,7 +44,7 @@ exports.login = asyncCatch(async (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).json(errors);
+    return next(new CustomError(errors.errors[0].msg, 400));
   }
 
   const { username, password } = req.body;
