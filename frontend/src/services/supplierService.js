@@ -36,7 +36,7 @@ export const getSupplier = async (id) => {
 export const createSupplier = async (formData) => {
   try {
     const response = await axios.post(`${BASE_URL}suppliers`, formData);
-    if (response.statusText === "OK") {
+    if (response.statusText === "Created") {
       toast.success("Uspješno ste dodali novog dobavljača!", {
         position: toast.POSITION.TOP_CENTER,
       });

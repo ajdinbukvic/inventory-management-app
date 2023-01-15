@@ -36,7 +36,7 @@ export const getEmployee = async (id) => {
 export const createEmployee = async (formData) => {
   try {
     const response = await axios.post(`${BASE_URL}employees`, formData);
-    if (response.statusText === "OK") {
+    if (response.statusText === "Created") {
       toast.success("Uspješno ste dodali novog zaposlenika!", {
         position: toast.POSITION.TOP_CENTER,
       });

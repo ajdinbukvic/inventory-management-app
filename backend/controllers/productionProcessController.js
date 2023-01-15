@@ -7,6 +7,7 @@ const {
 const asyncCatch = require('./../utils/asyncCatch');
 const { validationResult } = require('express-validator');
 const factory = require('./factory');
+const CustomError = require('./../utils/customError');
 
 exports.getAllProductionProcesses = factory.getAll(ProductionProcess);
 exports.getProductionProcess = factory.getOne(ProductionProcess);

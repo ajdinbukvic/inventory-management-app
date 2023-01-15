@@ -270,7 +270,9 @@ p {
 }
 
 .--my {
-  margin: 1rem 0;
+  margin: 3rem 0;
+  display: flex;
+  justify-content: center;
 }
 .--mx {
   margin: 0 1rem;

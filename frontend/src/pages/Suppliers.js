@@ -47,7 +47,7 @@ const Suppliers = () => {
   };
 
   const addNewSupplier = () => {
-    navigate("/manage-supplier");
+    navigate("/add-supplier");
   };
 
   const updateEndDate = async (date) => {
@@ -128,7 +128,7 @@ const Suppliers = () => {
                       </td>
                       <td className="icons">
                         <span>
-                          <Link to={`/edit-product/${id}`}>
+                          <Link to={`/edit-supplier/${id}`}>
                             <FaEdit size={20} color={"blue"} />
                           </Link>
                         </span>

@@ -39,7 +39,7 @@ const Supplies = () => {
   };
 
   const addNewSupply = () => {
-    navigate("/manage-supply");
+    navigate("/add-supply");
   };
 
   return (
@@ -107,7 +107,7 @@ const Supplies = () => {
                       <td>{Supplier.name}</td>
                       <td className="icons">
                         <span>
-                          <Link to={`/edit-product/${id}`}>
+                          <Link to={`/edit-supply/${id}`}>
                             <FaEdit size={20} color={"blue"} />
                           </Link>
                         </span>

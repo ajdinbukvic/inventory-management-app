@@ -22,15 +22,6 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 axios.defaults.withCredentials = true;
 
 function App() {
-  //const dispatch = useDispatch();
-  //const isLoggedIn = useSelector(selectIsLoggedIn);
-  // useEffect(() => {
-  //   async function loginStatus() {
-  //     const status = await getLoginStatus();
-  //     dispatch(SET_LOGIN(status));
-  //   }
-  //   loginStatus();
-  // }, [dispatch]);
   return (
     <BrowserRouter>
       <ToastContainer />
@@ -69,7 +60,19 @@ function App() {
           }
         />
         <Route
-          path="/manage-employee"
+          path="/add-employee"
+          element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Layout>
+                  <ManageEmployee />
+                </Layout>
+              </Sidebar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-employee/:id"
           element={
             <ProtectedRoute>
               <Sidebar>
@@ -93,7 +96,19 @@ function App() {
           }
         />
         <Route
-          path="/manage-supply"
+          path="/add-supply"
+          element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Layout>
+                  <ManageSupply />
+                </Layout>
+              </Sidebar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-supply/:id"
           element={
             <ProtectedRoute>
               <Sidebar>
@@ -117,7 +132,19 @@ function App() {
           }
         />
         <Route
-          path="/manage-supplier"
+          path="/add-supplier"
+          element={
+            <ProtectedRoute>
+              <Sidebar>
+                <Layout>
+                  <ManageSupplier />
+                </Layout>
+              </Sidebar>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-supplier"
           element={
             <ProtectedRoute>
               <Sidebar>

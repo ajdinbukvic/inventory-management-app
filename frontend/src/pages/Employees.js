@@ -19,7 +19,7 @@ const Employees = () => {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
 
   const fetchData = async () => {
     const result = await getAllEmployees();
@@ -47,7 +47,7 @@ const Employees = () => {
   };
 
   const addNewEmployee = () => {
-    navigate("/manage-employee");
+    navigate("/add-employee");
   };
 
   const updateDismissalDate = async (date) => {
@@ -125,7 +125,7 @@ const Employees = () => {
                       </td>
                       <td className="icons">
                         <span>
-                          <Link to={`/edit-product/${id}`}>
+                          <Link to={`/edit-employee/${id}`}>
                             <FaEdit size={20} color={"blue"} />
                           </Link>
                         </span>

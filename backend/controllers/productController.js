@@ -2,6 +2,7 @@ const { Products, ProductionProcess } = require('../models');
 const asyncCatch = require('./../utils/asyncCatch');
 const { validationResult } = require('express-validator');
 const factory = require('./factory');
+const CustomError = require('./../utils/customError');
 
 exports.getAllProducts = factory.getAll(Products);
 exports.getProduct = factory.getOne(Products);

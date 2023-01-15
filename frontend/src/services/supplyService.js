@@ -36,7 +36,7 @@ export const getSupply = async (id) => {
 export const createSupply = async (formData) => {
   try {
     const response = await axios.post(`${BASE_URL}supplies`, formData);
-    if (response.statusText === "OK") {
+    if (response.statusText === "Created") {
       toast.success("Uspješno ste dodali novu sirovinu!", {
         position: toast.POSITION.TOP_CENTER,
       });

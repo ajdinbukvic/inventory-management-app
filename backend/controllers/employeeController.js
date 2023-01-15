@@ -2,6 +2,7 @@ const { Employees, Users, sequelize } = require('../models');
 const asyncCatch = require('./../utils/asyncCatch');
 const { validationResult } = require('express-validator');
 const factory = require('./factory');
+const CustomError = require('./../utils/customError');
 
 exports.getAllEmployees = factory.getAll(Employees); //automatksi popunjava i podatke iz tabele Users (bez passworda)
 exports.getEmployee = factory.getOne(Employees); //automatksi popunjava i podatke iz tabele Users (bez passworda)
