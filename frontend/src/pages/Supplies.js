@@ -6,7 +6,11 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { deleteSupply, getAllSupplies } from "../services/supplyService";
+import {
+  deleteSupply,
+  getAllSupplies,
+  updateSupply,
+} from "../services/supplyService";
 import { Link, useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 
@@ -17,7 +21,7 @@ const Supplies = () => {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
 
   const fetchData = async () => {
     const result = await getAllSupplies();
@@ -48,6 +52,11 @@ const Supplies = () => {
     await fetchData();
   };
 
+  const onChangeStatus = async (id) => {
+    await updateSupply(id, { isUsed: false });
+    await fetchData();
+  };
+
   const deleteAlert = (id) => {
     confirmAlert({
       title: "Brisanje sirovine",
@@ -56,6 +65,22 @@ const Supplies = () => {
         {
           label: "Izbriši",
           onClick: () => onDelete(id),
+        },
+        {
+          label: "Izlaz",
+        },
+      ],
+    });
+  };
+
+  const changeUsedStatus = (id) => {
+    confirmAlert({
+      title: "Promjena statusa upotrebe",
+      message: "Jeste li sigurni da želite isključiti upotrebu ove sirovine?",
+      buttons: [
+        {
+          label: "Isključi",
+          onClick: () => onChangeStatus(id),
         },
         {
           label: "Izlaz",
@@ -95,7 +120,7 @@ const Supplies = () => {
                   <th>Jed. mjere</th>
                   <th>Upotreba</th>
                   <th>Dobavljač</th>
-                  <th>Uređivanje</th>
+                  <th>Akcije</th>
                 </tr>
               </thead>
 
@@ -127,7 +152,11 @@ const Supplies = () => {
                       <td>{unitMeasure}</td>
                       <td>
                         {isUsed === true ? (
-                          <AiOutlineCheck size={20} color={"green"} />
+                          <AiOutlineCheck
+                            size={20}
+                            color={"green"}
+                            onClick={() => changeUsedStatus(id)}
+                          />
                         ) : (
                           <MdCancel size={20} color={"red"} />
                         )}

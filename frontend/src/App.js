@@ -144,7 +144,7 @@ function App() {
           }
         />
         <Route
-          path="/edit-supplier"
+          path="/edit-supplier/:id"
           element={
             <ProtectedRoute>
               <Sidebar>
