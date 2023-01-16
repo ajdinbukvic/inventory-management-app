@@ -76,6 +76,11 @@ export const updateSupply = async (id, formData) => {
 export const deleteSupply = async (id) => {
   try {
     const response = await axios.delete(`${BASE_URL}supplies/${id}`);
+    if (response.status === 204) {
+      toast.success("Uspješno ste izbrisali sirovinu!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
     return response.data;
   } catch (error) {
     const message =

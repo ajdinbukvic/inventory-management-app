@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectUser, SET_LOGIN } from "../helpers/auth";
+import { selectUser, SET_LOGIN, SET_USER } from "../helpers/auth";
 import { logoutUser } from "../services/authService";
 
 const Header = () => {
@@ -11,7 +11,7 @@ const Header = () => {
   const logout = async () => {
     await logoutUser();
     await dispatch(SET_LOGIN(false));
-    localStorage.removeItem("user");
+    await dispatch(SET_USER({}));
     navigate("/login");
   };
 

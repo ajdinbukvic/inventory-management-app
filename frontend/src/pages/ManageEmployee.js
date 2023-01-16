@@ -42,7 +42,6 @@ const ManageEmployee = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name);
     if (name === "username") setUsername(value);
     else if (name === "password") setPassword(value);
     else setEmployee({ ...employee, [name]: value });

@@ -6,8 +6,9 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { getAllSupplies } from "../services/supplyService";
+import { deleteSupply, getAllSupplies } from "../services/supplyService";
 import { Link, useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 
 const Supplies = () => {
   const navigate = useNavigate();
@@ -40,6 +41,27 @@ const Supplies = () => {
 
   const addNewSupply = () => {
     navigate("/add-supply");
+  };
+
+  const onDelete = async (id) => {
+    await deleteSupply(id);
+    await fetchData();
+  };
+
+  const deleteAlert = (id) => {
+    confirmAlert({
+      title: "Brisanje sirovine",
+      message: "Jeste li sigurni da želite obrisati ovu sirovinu?",
+      buttons: [
+        {
+          label: "Izbriši",
+          onClick: () => onDelete(id),
+        },
+        {
+          label: "Izlaz",
+        },
+      ],
+    });
   };
 
   return (
@@ -93,7 +115,13 @@ const Supplies = () => {
                     <tr key={id}>
                       <td>{index + 1}</td>
                       <td>{name}</td>
-                      <td>{quantity}</td>
+                      <td
+                        className={
+                          quantity < minQuantity ? "--color-danger" : ""
+                        }
+                      >
+                        {quantity}
+                      </td>
                       <td>{minQuantity}</td>
                       <td>{price}</td>
                       <td>{unitMeasure}</td>
@@ -115,15 +143,10 @@ const Supplies = () => {
                           <FaTrashAlt
                             size={20}
                             color={"red"}
-                            onClick={() => console.log(id)}
+                            onClick={() => deleteAlert(id)}
                           />
                         </span>
                       </td>
-                      {/* <DateModal
-                        onSave={updateEndDate}
-                        show={showModal}
-                        onNo={() => setShowModal(false)}
-                      /> */}
                     </tr>
                   );
                 })}
