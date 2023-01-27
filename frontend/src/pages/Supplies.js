@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Employees.css";
+import "./Table.css";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineCheck } from "react-icons/ai";
@@ -90,7 +90,7 @@ const Supplies = () => {
   };
 
   return (
-    <div className="product-list">
+    <div className="item-list">
       <hr />
       <div className="table">
         <div

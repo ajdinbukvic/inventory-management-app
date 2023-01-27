@@ -28,6 +28,13 @@ exports.createUserValidator = [
     .withMessage(USER_PASSWORD_MIN_LENGTH)
     .bail(),
 
+  check('passwordConfirm')
+    .notEmpty()
+    .withMessage(USER_PASSWORD_CONFIRM_REQUIRED)
+    .isLength({ min: 8 })
+    .withMessage(USER_PASSWORD_MIN_LENGTH)
+    .bail(),
+
   (req, res, next) => {
     next();
   },

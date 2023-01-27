@@ -8,15 +8,13 @@ import ManageEmployee from "./pages/ManageEmployee";
 import Supplies from "./pages/Supplies";
 import ManageSupply from "./pages/ManageSupply";
 import Suppliers from "./pages/Suppliers";
+import PageNotFound from "./pages/PageNotFound";
 import ManageSupplier from "./pages/ManageSupplier";
 import Sidebar from "./components/sidebar/Sidebar";
 import Layout from "./components/Layout";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { useDispatch } from "react-redux";
-// import { getLoginStatus } from "./services/authService";
-// import { SET_LOGIN } from "./helpers/auth";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 axios.defaults.withCredentials = true;
@@ -155,6 +153,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

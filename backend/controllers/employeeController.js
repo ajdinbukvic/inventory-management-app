@@ -3,6 +3,7 @@ const asyncCatch = require('./../utils/asyncCatch');
 const { validationResult } = require('express-validator');
 const factory = require('./factory');
 const CustomError = require('./../utils/customError');
+const { USER_PASSWORDS_NOT_MATCHING } = require('../constants/userConstants');
 
 exports.getAllEmployees = factory.getAll(Employees); //automatksi popunjava i podatke iz tabele Users (bez passworda)
 exports.getEmployee = factory.getOne(Employees); //automatksi popunjava i podatke iz tabele Users (bez passworda)
@@ -16,6 +17,10 @@ exports.createEmployee = asyncCatch(async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     return next(new CustomError(errors.errors[0].msg, 400));
+  }
+
+  if (req.body.password !== req.body.passwordConfirm) {
+    return next(new CustomError(USER_PASSWORDS_NOT_MATCHING, 401));
   }
 
   const newEmployee = {

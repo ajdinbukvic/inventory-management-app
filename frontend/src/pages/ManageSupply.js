@@ -7,7 +7,7 @@ import {
 } from "../services/supplyService";
 import { getAllSuppliers } from "../services/supplierService";
 import Card from "../components/card/Card";
-import "./ManageEmployee.css";
+import "./Manage.css";
 
 const ManageSupply = () => {
   const { id } = useParams();
@@ -62,7 +62,7 @@ const ManageSupply = () => {
   return (
     <div>
       <h3 className="--mt">Upravljanje sirovinama</h3>
-      <div className="add-product">
+      <div className="add-item">
         <Card cardClass={"card"}>
           <form onSubmit={saveSupply}>
             <label>Naziv:</label>

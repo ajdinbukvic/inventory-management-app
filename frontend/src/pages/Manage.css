@@ -1,26 +1,26 @@
-.add-product {
+.add-item {
   margin-top: 5rem;
   margin-bottom: 5rem;
   display: flex;
   justify-content: center;
 }
-.add-product .card {
+.add-item .card {
   width: 100%;
   max-width: 500px;
   padding: 1rem;
 }
-.add-product form label {
+.add-item form label {
   display: block;
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--color-dark);
 }
-.add-product form input[type="text"],
-.add-product form input[type="number"],
-.add-product form input[type="date"],
-.add-product form input[type="email"],
-.add-product form select,
-.add-product form input[type="password"] {
+.add-item form input[type="text"],
+.add-item form input[type="number"],
+.add-item form input[type="date"],
+.add-item form input[type="email"],
+.add-item form select,
+.add-item form input[type="password"] {
   display: block;
   font-size: 1.6rem;
   font-weight: 300;

@@ -6,7 +6,7 @@ import {
   updateEmployee,
 } from "../services/employeeService";
 import Card from "../components/card/Card";
-import "./ManageEmployee.css";
+import "./Manage.css";
 
 const ManageEmployee = () => {
   const { id } = useParams();
@@ -16,15 +16,7 @@ const ManageEmployee = () => {
   const [employee, setEmployee] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  // const fetchData = async () => {
-  //   const result = await getEmployee(id);
-  //   result.data.data.employmentDate = result.data.data.employmentDate
-  //     .split("-")
-  //     .reverse()
-  //     .join("-");
-  //   setEmployee(result.data.data);
-  // };
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   useEffect(() => {
     if (!isAddMode) {
@@ -44,6 +36,7 @@ const ManageEmployee = () => {
     const { name, value } = e.target;
     if (name === "username") setUsername(value);
     else if (name === "password") setPassword(value);
+    else if (name === "passwordConfirm") setPasswordConfirm(value);
     else setEmployee({ ...employee, [name]: value });
   };
 
@@ -63,6 +56,7 @@ const ManageEmployee = () => {
     } else {
       data.username = username;
       data.password = password;
+      data.passwordConfirm = passwordConfirm;
       result = await createEmployee(data);
     }
     console.log(data);
@@ -72,7 +66,7 @@ const ManageEmployee = () => {
   return (
     <div>
       <h3 className="--mt">Upravljanje zaposlenicima</h3>
-      <div className="add-product">
+      <div className="add-item">
         <Card cardClass={"card"}>
           <form onSubmit={saveEmployee}>
             <label>Ime:</label>
@@ -151,6 +145,15 @@ const ManageEmployee = () => {
                   name="password"
                   required
                   value={password}
+                  onChange={handleInputChange}
+                />
+                <label>Potvrda lozinke:</label>
+                <input
+                  type="password"
+                  placeholder="potvrda lozinke"
+                  name="passwordConfirm"
+                  required
+                  value={passwordConfirm}
                   onChange={handleInputChange}
                 />
               </>

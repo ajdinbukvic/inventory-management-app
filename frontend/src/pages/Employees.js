@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Employees.css";
+import "./Table.css";
 import { FaEdit } from "react-icons/fa";
 import { CgDanger } from "react-icons/cg";
 import ReactPaginate from "react-paginate";
@@ -57,7 +57,7 @@ const Employees = () => {
   };
 
   return (
-    <div className="product-list">
+    <div className="item-list">
       <hr />
       <div className="table">
         <div
