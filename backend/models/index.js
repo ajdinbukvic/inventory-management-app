@@ -7,24 +7,24 @@ const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const mysql = require('mysql2');
 const db = {};
+//const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-});
+// const connection = mysql.createConnection({
+//   host: process.env.DATABASE_HOST,
+//   user: process.env.DATABASE_USERNAME,
+//   password: process.env.DATABASE_PASSWORD,
+// });
 
-connection.query(
-  `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASE_NAME}`,
-  (err, results) => {
-    console.log(`Results: ${results}`);
-    console.log(`Error: ${err}`);
-  }
-);
+// connection.query(
+//   `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASE_NAME}`,
+//   (err, results) => {
+//     console.log(`Results: ${results}`);
+//     console.log(`Error: ${err}`);
+//   }
+// );
 
-connection.end();
+// connection.end();
 
 let sequelize;
 if (config.use_env_variable) {
